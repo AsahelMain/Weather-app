@@ -26,11 +26,10 @@ def get_weather(ticket: Ticket):
         my_weather_destination = ticket.get_weather_destination()
         cache[destination_city] = my_weather_destination
     
-    return my_weather_origin, 
-    
-
+    return my_weather_origin, my_weather_destination
 
 #Prueba1 - Pide el clima del ticket con indice 4 (ciudad de origen y de destino)
+
 weather1, weather2 = get_weather(myTickets[4])
 print("MTY: ", end=" ")
 weather1.get_data()
