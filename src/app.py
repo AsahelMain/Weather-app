@@ -7,8 +7,8 @@ myTickets = readcsv.getTickets()
 def get_weather(ticket: Ticket):
     origin_city = ticket.get_origin_city()
     destination_city = ticket.get_destination_city()
-   # my_weather_origin
-    #my_weather_destination
+    my_weather_origin = ' '
+    my_weather_destination = ' '
 
     if origin_city in cache:
         print(origin_city + ' already in cache')
@@ -23,12 +23,14 @@ def get_weather(ticket: Ticket):
         my_weather_destination = cache[destination_city]
     else:
         print(destination_city + " not in cache")
-        my_weather_destination = ticket.get_weather_origin()
+        my_weather_destination = ticket.get_weather_destination()
         cache[destination_city] = my_weather_destination
     
-    return my_weather_origin, my_weather_destination
+    return my_weather_origin, 
+    
 
-#Prueba - Pide el clima del ticket con indice 4 (ciudad de origen y de destino)
+
+#Prueba1 - Pide el clima del ticket con indice 4 (ciudad de origen y de destino)
 weather1, weather2 = get_weather(myTickets[4])
 print("MTY: ", end=" ")
 weather1.get_data()

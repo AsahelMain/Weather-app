@@ -31,7 +31,7 @@ class Ticket:
     def get_weather_origin(self):
         apikey = self.get_key()
         URL = "http://api.openweathermap.org/data/2.5/weather?"
-        URL += "lat=" + self.lat_origen + "&lon=" + self.long_origen + "&appid=" + apikey
+        URL += "lat=" + self.lat_origen + "&lon=" + self.long_origen + "&appid=" + apikey + "&units=metric"
         parameters = {'address':"location"}
         r = requests.get(url = URL, params = parameters)
         data = r.json()
@@ -49,7 +49,7 @@ class Ticket:
     def get_weather_destination(self):
         apikey = self.get_key()
         URL = "http://api.openweathermap.org/data/2.5/weather?"
-        URL += "lat=" + self.lat_destino + "&lon=" + self.long_destino + "&appid=" + apikey
+        URL += "lat=" + self.lat_destino + "&lon=" + self.long_destino + "&appid=" + apikey + "&units=metric"
         parameters = {'address':"location"}
         r = requests.get(url = URL, params = parameters)
         data = r.json()
