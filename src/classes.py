@@ -2,6 +2,7 @@ import csv
 from hashlib import new
 import requests
 from urllib import request
+import os
 
 class Ticket:
     origen = ''
@@ -21,7 +22,9 @@ class Ticket:
 
     def get_key(self):
         apikey = ''
-        with open('key.csv', 'r') as file:
+        absolute_folder_path = os.path.dirname(os.path.realpath(__file__))
+        absolute_key_path = os.path.join(absolute_folder_path, 'key.csv')
+        with open(absolute_key_path, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 apikey = row[0]
@@ -31,7 +34,7 @@ class Ticket:
     def get_weather_origin(self):
         apikey = self.get_key()
         URL = "http://api.openweathermap.org/data/2.5/weather?"
-        URL += "lat=" + self.lat_origen + "&lon=" + self.long_origen + "&appid=" + apikey + "&units=metric"
+        URL += "lat=" + self.lat_origen + "&lon=" + self.long_origen + "&appid=" + apikey + "&units=metric&lang=es"
         parameters = {'address':"location"}
         r = requests.get(url = URL, params = parameters)
         data = r.json()
@@ -49,7 +52,7 @@ class Ticket:
     def get_weather_destination(self):
         apikey = self.get_key()
         URL = "http://api.openweathermap.org/data/2.5/weather?"
-        URL += "lat=" + self.lat_destino + "&lon=" + self.long_destino + "&appid=" + apikey + "&units=metric"
+        URL += "lat=" + self.lat_destino + "&lon=" + self.long_destino + "&appid=" + apikey + "&units=metric&lang=es"
         parameters = {'address':"location"}
         r = requests.get(url = URL, params = parameters)
         data = r.json()
@@ -95,7 +98,7 @@ class WeatherInfo:
 
     def get_data(self):
         print(f'{self.weather_main}, {self.weather_description}, {self.main_temp}, {self.main_feelslike}, {self.main_temp_min}, {self.main_temp_max}, {self.main_humidity}')
-
+        #print(self.main_feelslike)
 
         
 
