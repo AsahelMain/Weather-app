@@ -99,6 +99,29 @@ class WeatherInfo:
     def get_data(self):
         print(f'{self.weather_main}, {self.weather_description}, {self.main_temp}, {self.main_feelslike}, {self.main_temp_min}, {self.main_temp_max}, {self.main_humidity}')
         #print(self.main_feelslike)
+    
+    def get_attributes_as_list(self):
+        attributes = []
+        attributes.append(self.main_temp)
+        attributes.append(self.main_temp_max)
+        attributes.append(self.main_temp_min)
+        attributes.append(self.main_feelslike)
+        attributes.append(self.main_humidity)
+        attributes.append(self.weather_description)
+        return attributes
 
-        
+
+
+"""""
+class City:
+    city_name = ' '
+    latitude = ' '
+    longitude = ' '
+
+    def __init__(self, city_name = '', latitude = '', longitude = ''):
+        self.city_name = city_name
+        self.latitude = latitude
+        self.longitude = longitude
+  """  
+    
 

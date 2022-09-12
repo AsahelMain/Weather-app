@@ -1,8 +1,44 @@
-from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
+from argparse import MetavarTypeHelpFormatter
+from asyncore import read
+from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame, OptionMenu, StringVar
 from PIL import Image 
 import requests       
 import time
 import os
+from classes import Ticket, WeatherInfo
+import readcsv
+
+
+cache = {}
+myTickets = readcsv.getTickets()
+
+def get_weather(ticket: Ticket):
+    origin_city = ticket.get_origin_city()
+    destination_city = ticket.get_destination_city()
+    my_weather_origin = ' '
+    my_weather_destination = ' '
+
+    if origin_city in cache:
+        my_weather_origin = cache[origin_city]
+    else:
+        my_weather_origin = ticket.get_weather_origin()
+        cache[origin_city] = my_weather_origin
+    
+    if destination_city in cache:
+        my_weather_destination = cache[destination_city]
+    else:
+        my_weather_destination = ticket.get_weather_destination()
+        cache[destination_city] = my_weather_destination
+    
+    return my_weather_origin, my_weather_destination
+
+
+for ticket in myTickets:
+    if ticket.get_origin_city() == 'origin':
+        continue
+    weather1, weather2 = get_weather(ticket)
+
+#weather1, weather2 = get_weather(myTickets[5])
 
 class Window(Frame):
 	def __init__(self, master, *args):
@@ -34,6 +70,32 @@ class Window(Frame):
 	def get_weather(self):
 		city = self.enter_city.get()
 
+		city = city.upper()
+
+		if city in cache:
+
+			weather_info = cache[city].get_attributes_as_list()
+			self.temp['text'] = str(float(weather_info[0])) + " °C"
+			self.temp_min['text'] = str(float(weather_info[1]))  +" °C"
+			self.temp_max['text'] = str(float(weather_info[2])) +" °C"
+			self.feels_like['text'] = str(float(weather_info[3])) + " °C"
+			self.humidity['text'] = str(int(weather_info[4])) + ' %'	  
+			self.description['text'] = weather_info[5]
+			self.place['text'] =  city
+		else:
+			self.warning['text'] =  'Ciudad no encontrada'
+			self.temp['text'] = ''
+			self.temp_min['text'] = ''
+			self.temp_max['text'] = ''
+			self.feels_like['text'] = ''
+			self.description['text'] = ''
+			self.humidity['text'] = ''
+			self.master.update()
+			time.sleep(2)	    	
+			self.warning['text'] = ''
+			self.place['text'] = ''	
+
+		""""
 		API = 'https://api.openweathermap.org/data/2.5/weather?q=' +city+ '&appid=a6c823e88b813b8ba68e3508021fc9ec&units=metric&lang=es'  
 		try:
 			json_datos = requests.get(API).json()
@@ -56,6 +118,7 @@ class Window(Frame):
 			time.sleep(2)	    	
 			self.warning['text'] = ''
 			self.place['text'] = ''	
+		"""
 
 	def widgets(self):
 		absolute_folder_path = os.path.dirname(os.path.realpath(__file__))
