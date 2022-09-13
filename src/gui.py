@@ -1,7 +1,7 @@
 from argparse import MetavarTypeHelpFormatter
 from asyncore import read
 from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame, OptionMenu, StringVar
-from PIL import Image 
+#from PIL import Image 
 import requests       
 import time
 import os
