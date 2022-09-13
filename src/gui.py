@@ -1,30 +1,43 @@
 from argparse import MetavarTypeHelpFormatter
 from asyncore import read
-from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame, OptionMenu, StringVar
+from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
 
 from tkinter.ttk import Combobox
-from PIL import Image       
+#from PIL import Image       
 
 import time
 import os
 from classes import Ticket
 import readcsv
 
-
+#Usamos un diccionario para el cache
 cache = {}
 cities = []
+
+#La lista de todos los tickets
 myTickets = readcsv.getTickets()
 
+#Dado un ticket, se obtiene el clima de la ciudad de origen
+# y de destino, y se agregan al caché
 def get_weather(ticket: Ticket):
+	#Ciudad de origen
 	origin_city = ticket.get_origin_city()
+	#Ciudad de destino
 	destination_city = ticket.get_destination_city()
+	
+	#Clima de la ciudad de origen
 	my_weather_origin = ' '
+	#Clima de la ciudad de llegada
 	my_weather_destination = ' '
 
+	#Si la ciudad ya está en el caché entonces ya no se hace otra request
+	#sino que el clima será el valor que tiene la ciudad en el caché
 	if origin_city in cache:
 		my_weather_origin = cache[origin_city]
 	else:
+		#Se obtiene el clima de la ciudad de origen
 		my_weather_origin = ticket.get_weather_origin()
+		#Se guarda la ciudad y el clima en el caché 
 		cache[origin_city] = my_weather_origin
 		cities.append(origin_city)
     
@@ -37,15 +50,16 @@ def get_weather(ticket: Ticket):
 
 	return my_weather_origin, my_weather_destination
 
-for ticket in myTickets:
-    if ticket.get_origin_city() == 'origin':
-        continue
-    weather1, weather2 = get_weather(ticket)
 
+def get_database():
+	for ticket in myTickets:
+		if ticket.get_origin_city() == 'origin':
+			continue
+		weather1, weather2 = get_weather(ticket)
 
-#weather1, weather2 = get_weather(myTickets[5])
 
 class Window(Frame):
+
 	def __init__(self, master, *args):
 		super().__init__( master,*args)
 		self.click = 1
@@ -67,6 +81,7 @@ class Window(Frame):
 		self.frame5.grid(column=2, row =2 , sticky='nsew', padx=5, pady=5)
 
 		self.widgets()
+
 
 	def get_weather(self):
 		city = self.enter_city.get()
@@ -108,6 +123,10 @@ class Window(Frame):
 		self.enter_city.grid(column=1,row=0)
 		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.get_weather)
 		self.bt_start.grid(column=2, row=0, padx=2, pady=2)
+
+		#self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = get_database)
+		#self.bt_start.grid(column=5, row=0, padx=2, pady=2)
+		
 		Label(self.frame,text='Ciudades disponibles',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=3,row=0, padx=5)
 		self.city_list = Combobox(self.frame, state = "readonly", values=cities,font=('Helvetica',12,'bold'))
 		self.city_list.grid(column=4, row=0)

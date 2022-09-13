@@ -1,6 +1,8 @@
 import csv
 from classes import Ticket
 
+#Funcion que regresa una lista de objetos ticket. Estos tickets se contruyen en base
+#a la información que contiene el archivo csv 
 def getTickets():
     tickets = []
 
