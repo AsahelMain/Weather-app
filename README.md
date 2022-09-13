@@ -1,4 +1,8 @@
-Proyecto01
+#Proyecto01
+
+Aplicación para Linux/Unix, Windows, Mac
+
+Versión de Python: Python 3.10.6
 
 Paqueterías usadas: 
 1. csv
@@ -10,5 +14,7 @@ Paqueterías usadas:
 7. tkinter.ttk: Combobox
 8. time
 
+
 Ejecución:
 En Proyecto01\src\ ejecutar el comando: python3 gui.py
+
