@@ -50,6 +50,7 @@ def get_weather(ticket: Ticket):
 
 	return my_weather_origin, my_weather_destination
 
+#weather1, weather2 = get_weather(myTickets[2])
 
 def get_database():
 	for ticket in myTickets:
@@ -118,22 +119,33 @@ class Window(Frame):
 		self.image_humidity = PhotoImage(file =absolute_path_humidity)
 		absolute_path_description = os.path.join(absolute_folder_path, 'images/climate.png')
 		self.image_description = PhotoImage(file =absolute_path_description)
-		Label(self.frame,text='Buscar ciudad',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=0,row=0, padx=5)
+		#Label(self.frame,text='Ingresar:',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=0,row=0, padx=5)
+		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.get_weather)
+		self.bt_start.grid(column=0, row=0, padx=2, pady=2)
+
+		def temp_text(e):
+		   self.enter_city.delete(0,"end")
+
 		self.enter_city = Entry(self.frame, font=('Verdana', 14),highlightbackground = "grey1", highlightcolor= "green2", highlightthickness=2)
 		self.enter_city.grid(column=1,row=0)
-		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.get_weather)
-		self.bt_start.grid(column=2, row=0, padx=2, pady=2)
-
-		#self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = get_database)
-		#self.bt_start.grid(column=5, row=0, padx=2, pady=2)
-		
-		Label(self.frame,text='Ciudades disponibles',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=3,row=0, padx=5)
-		self.city_list = Combobox(self.frame, state = "readonly", values=cities,font=('Helvetica',12,'bold'))
-		self.city_list.grid(column=4, row=0)
+		self.enter_city.insert(0, "Buscar ciudad")
+		self.enter_city.bind("<FocusIn>", temp_text)
+		Label(self.frame,text='Ciudades disponibles:',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=2,row=0, padx=5)
+		self.city_list = Combobox(self.frame, state = "readonly", values=cities, font=('Helvetica',12,'bold'))
+		self.city_list.grid(column=3, row=0)
 		self.warning = Label(self.frame,fg= 'red3', bg='white',font=('Verdana',12))
-		self.warning.grid(column=5,row=0, padx=5)
+		self.warning.grid(column=4,row=0, padx=5)
 		self.place = Label(self.frame,fg= 'forest green', bg='white',font=('Helvetica',12,'bold'))
-		self.place.grid(column=6,row=0, padx=5)
+		self.place.grid(column=5,row=0, padx=5)
+
+		def button_action():
+			self.warning['text'] = 'Cargando datos'
+			get_database()
+			self.city_list['values'] = cities
+			self.warning['text'] = ''
+
+		self.bt_data = Button(self.frame, text='Inicializar', bg='OliveDrab1',font=('Helvetica',12,'bold'),highlightthickness=0, activebackground='white', bd=0, command = button_action)
+		self.bt_data.grid(column=6, row=0, padx=2, pady=2)
 
 		Label(self.frame2,text='Informe del clima', bg='DarkOliveGreen1', font=('Helvetica',20,'bold')).pack(expand=1)
 		Label(self.frame3,text='Sensación térmica', bg='peach puff', font=('Helvetica',14,'bold')).pack(expand=1)
