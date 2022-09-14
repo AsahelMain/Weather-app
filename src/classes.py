@@ -121,6 +121,3 @@ class WeatherInfo:
         attributes.append(self.main_humidity)
         attributes.append(self.weather_description)
         return attributes
- 
-    
-
