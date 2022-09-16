@@ -1,62 +1,18 @@
 from argparse import MetavarTypeHelpFormatter
 from asyncore import read
 from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
-
-from tkinter.ttk import Combobox
-#from PIL import Image       
-
+from tkinter.ttk import Combobox    
 import time
 import os
-from classes import Ticket
+from classes import City
 import readcsv
 
-#Usamos un diccionario para el cache
+#Se obtiene un diccionario con todas las ciudades que se encontraron en el archivo csv
+myCities = readcsv.getCities()
+
+#Se usa un diccionario como caché. Las llaves serán las claves IATA y los valores serán
+#objetos de tipo WeatherInfo
 cache = {}
-cities = []
-
-#La lista de todos los tickets
-myTickets = readcsv.getTickets()
-
-#Dado un ticket, se obtiene el clima de la ciudad de origen
-# y de destino, y se agregan al caché
-def get_weather(ticket: Ticket):
-	#Ciudad de origen
-	origin_city = ticket.get_origin_city()
-	#Ciudad de destino
-	destination_city = ticket.get_destination_city()
-	
-	#Clima de la ciudad de origen
-	my_weather_origin = ' '
-	#Clima de la ciudad de llegada
-	my_weather_destination = ' '
-
-	#Si la ciudad ya está en el caché entonces ya no se hace otra request
-	#sino que el clima será el valor que tiene la ciudad en el caché
-	if origin_city in cache:
-		my_weather_origin = cache[origin_city]
-	else:
-		#Se obtiene el clima de la ciudad de origen
-		my_weather_origin = ticket.get_weather_origin()
-		#Se guarda la ciudad y el clima en el caché 
-		cache[origin_city] = my_weather_origin
-		cities.append(origin_city)
-    
-	if destination_city in cache:
-		my_weather_destination = cache[destination_city]
-	else:
-		my_weather_destination = ticket.get_weather_destination()
-		cache[destination_city] = my_weather_destination
-		cities.append(destination_city)
-
-	return my_weather_origin, my_weather_destination
-
-
-def get_database():
-	for ticket in myTickets:
-		if ticket.get_origin_city() == 'origin':
-			continue
-		weather1, weather2 = get_weather(ticket)
-
 
 class Window(Frame):
 
@@ -82,14 +38,40 @@ class Window(Frame):
 
 		self.widgets()
 
+	#Método que recibe una ciudad y que regresa los atributos climáticos de esa ciudad
+	#en una lista 
+	def get_weather_info(self, city: City):
 
-	def get_weather(self):
+		city_name = city.get_city()
+		#Revisamos si encontramos esa ciudad en el caché. Si sí, entonces ya no hacemos 
+		#una llamada a la API. De lo contrario, lo hacemos
+		if city_name in cache:
+			print(city_name + ' already in cache')
+			#Obtenemos la información del clima desde el caché
+			weather = cache[city_name]
+			#Obtenemos la información climática en forma de lista
+			weather_list = weather.get_attributes_as_list()
+		else:
+			print(city_name + ' not in cache')
+			#Obtenemos la información climática de la ciudad, en forma de objeto de tipo WeatherInfo
+			weather = city.get_weather()
+			#Guardamos en el caché la ciudad con su información climática
+			cache[city_name] = weather
+			#Obtenemos la información climática en forma de lista
+			weather_list = weather.get_attributes_as_list()
+		return weather_list
+	
+	#Método que busca la ciudad deseada y muestra en pantalla la información climática obtenida
+	def search_weather(self):
 		city = self.enter_city.get()
-
 		city = city.upper()
 
-		if city in cache:
-			weather_info = cache[city].get_attributes_as_list()
+		#Revisamos si la ciudad está en la lista de ciudades que se leyeron del csv
+		#Si está, entonces mandamos a llamar a get_weather_info y mostramos la información del clima en pantalla
+		#Si no está entonces mostramos en pantalla que la ciudad no fue encontrada
+		if city in myCities:
+			desired_city = myCities[city]
+			weather_info = self.get_weather_info(desired_city)
 			self.temp['text'] = "Temperatura " + str(float(weather_info[0])) + " °C\n\n" + "T máxima " + str(float(weather_info[1]))  +" °C\n\n" + "T mínima " +str(float(weather_info[2])) +" °C"
 			self.feels_like['text'] = str(float(weather_info[3])) + " °C"
 			self.humidity['text'] = str(int(weather_info[4])) + ' %'	  
@@ -121,15 +103,9 @@ class Window(Frame):
 		Label(self.frame,text='Buscar ciudad',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=0,row=0, padx=5)
 		self.enter_city = Entry(self.frame, font=('Verdana', 14),highlightbackground = "grey1", highlightcolor= "green2", highlightthickness=2)
 		self.enter_city.grid(column=1,row=0)
-		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.get_weather)
+		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.search_weather)
 		self.bt_start.grid(column=2, row=0, padx=2, pady=2)
-
-		#self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = get_database)
-		#self.bt_start.grid(column=5, row=0, padx=2, pady=2)
 		
-		Label(self.frame,text='Ciudades disponibles',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=3,row=0, padx=5)
-		self.city_list = Combobox(self.frame, state = "readonly", values=cities,font=('Helvetica',12,'bold'))
-		self.city_list.grid(column=4, row=0)
 		self.warning = Label(self.frame,fg= 'red3', bg='white',font=('Verdana',12))
 		self.warning.grid(column=5,row=0, padx=5)
 		self.place = Label(self.frame,fg= 'forest green', bg='white',font=('Helvetica',12,'bold'))

@@ -4,25 +4,32 @@ import requests
 from urllib import request
 import os
 
-#Clase Ticket. Modela los tickets de avión
-class Ticket:
-    origen = ''
-    destino = ''
-    lat_origen = ''
-    long_origen = ''
-    lat_destino = ''
-    long_destino = ''
+#Clase City. Modela una ciudad.
+class City:
+    #Atributos
+    city = ' '
+    latitude = ' '
+    longitude = ' '
 
     #Constructor
-    def __init__(self, origen = '', destino = '', latO = '', longO = '', latD = '', longD = ''):
-        self.origen = origen
-        self.destino = destino
-        self.lat_origen = latO
-        self.long_origen = longO
-        self.lat_destino = latD
-        self.long_destino = longD
+    def __init__(self, city = ' ', latitude = ' ', longitude = ' '):
+        self.city = city
+        self.latitude = latitude
+        self.longitude = longitude
+    
+    #Regresa la clave IATA de la ciudad
+    def get_city(self):
+        return self.city
+    
+    #Regresa la latitud de la ciudad
+    def get_latitude(self):
+        return self.latitude
+    
+    #Regresa la longitud de la ciudad
+    def get_longitude(self):
+        return self.longitude
 
-    #Método que regresa la llave a modo de string para hacer la llamada a la API. Lee la llave del archivo key.csv
+    #Lee el archivo key.csv y regresa la llave API 
     def get_key(self):
         apikey = ''
         absolute_folder_path = os.path.dirname(os.path.realpath(__file__))
@@ -33,17 +40,23 @@ class Ticket:
                 apikey = row[0]
         return apikey
 
+    #Método que hace una llamada a la API para obtener el clima de la ciudad
+    #Regresa un objeto de tipo WeatherInfo
+    def get_weather(self):
 
-    #Método que regresa el clima de la ciudad de origen. Regresa un objeto de tipo WeatherInfo
-    def get_weather_origin(self):
+        #Se obtiene la llave API
         apikey = self.get_key()
-        URL = "http://api.openweathermap.org/data/2.5/weather?"
-        URL += "lat=" + self.lat_origen + "&lon=" + self.long_origen + "&appid=" + apikey + "&units=metric&lang=es"
+        URL = "http://api.openweathermap.org/data/2.5/weather?" 
+        URL += "lat=" + self.latitude + "&lon=" + self.longitude + "&appid=" + apikey + "&units=metric&lang=es"
         parameters = {'address':"location"}
+
         #Llamada a la API
         r = requests.get(url = URL, params = parameters)
+
         #Se extraen los datos en forma de diccionario con la función Json
         data = r.json()
+        
+        #Se accede a los atributos deseados: temperatura, sensación térmica, humedad, etcétera. Se guardan en distintas variables
         weather_main = data['weather'][0]['main']
         weather_description = data['weather'][0]['description']
         main_temp = data['main']['temp']
@@ -51,44 +64,17 @@ class Ticket:
         main_temp_min = data['main']['temp_min']
         main_temp_max = data['main']['temp_max']
         main_humidity = data['main']['humidity'] 
+
+        #Se construye un objeto de tipo WeatherInfo con la información obtenida
         new_weather_info = WeatherInfo(weather_main, weather_description, main_temp, main_feelslike, main_temp_min, main_temp_max, main_humidity)
 
         return new_weather_info
-    
-    #Método que regresa el clima de la ciudad de destino. Regresa un objeto de tipo WeatherInfo
-    def get_weather_destination(self):
-        apikey = self.get_key()
-        URL = "http://api.openweathermap.org/data/2.5/weather?"
-        URL += "lat=" + self.lat_destino + "&lon=" + self.long_destino + "&appid=" + apikey + "&units=metric&lang=es"
-        parameters = {'address':"location"}
-        r = requests.get(url = URL, params = parameters)
-        data = r.json()
-        weather_main = data['weather'][0]['main']
-        weather_description = data['weather'][0]['description']
-        main_temp = data['main']['temp']
-        main_feelslike = data['main']['feels_like']
-        main_temp_min = data['main']['temp_min']
-        main_temp_max = data['main']['temp_max']
-        main_humidity = data['main']['humidity'] 
-        new_weather_info = WeatherInfo(weather_main, weather_description, main_temp, main_feelslike, main_temp_min, main_temp_max, main_humidity)
-
-        return new_weather_info
-    
-    #Método que regresa la ciudad de origen
-    def get_origin_city(self):
-        return self.origen
-
-    #Método que regresa la ciudad de destino
-    def get_destination_city(self):
-        return self.destino
-
-    #Método que imprime los atributos de la clase
-    def get_data(self):
-        print(f'{self.origen}, {self.destino}, {self.lat_origen}, {self.long_origen}, {self.lat_destino}, {self.long_destino}')
 
 
-#Clase WeatherInfo. Contiene la información del clima de una ciudad 
+#Clase WeatherInfo. Modela la información del clima de una ciudad 
 class WeatherInfo:
+
+    #Atributos
     weather_main = ''
     weather_description = ''
     main_temp = ''
@@ -122,5 +108,6 @@ class WeatherInfo:
         attributes.append(self.weather_description)
         return attributes
  
-    
 
+
+          
