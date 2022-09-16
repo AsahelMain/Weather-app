@@ -1,6 +1,6 @@
-#Proyecto01
+Proyecto01
 
-Aplicación para Linux/Unix, Windows, Mac
+Aplicación para Windows, Linux/Unix, Mac
 
 Versión de Python: Python 3.10.6
 

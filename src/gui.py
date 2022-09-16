@@ -1,3 +1,10 @@
+#Modelado y programación - Proyecto 01 
+#Alumnos:
+#	-Main Cerezo Asahel Said
+#	-Reyes López Eduardo Alfonso
+#El diseño de la interfaz está basado en el código de Magno Efren, cuyo github es el siguiente: https://github.com/MagnoEfren
+
+
 from argparse import MetavarTypeHelpFormatter
 from asyncore import read
 from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
@@ -117,15 +124,6 @@ class Window(Frame):
 		self.warning.grid(column=4,row=0, padx=5)
 		self.place = Label(self.frame,fg= 'forest green', bg='white',font=('Helvetica',12,'bold'))
 		self.place.grid(column=5,row=0, padx=5)
-
-		def button_action():
-			self.bt_data['text'] = 'Cargando datos'
-			get_database()
-			self.city_list['values'] = cities
-			self.bt_data['text'] = 'Actualizar datos'
-
-		self.bt_data = Button(self.frame, text='Cargar datos', bg='OliveDrab1',font=('Helvetica',14,'bold'),highlightthickness=0, activebackground='white', bd=0, command = button_action)
-		self.bt_data.grid(column=6, row=0, padx=2, pady=2)
 
 		#Textos de cada frame
 		Label(self.frame2,text='Informe del clima', bg='DarkOliveGreen1', font=('Helvetica',20,'bold')).pack(expand=1)

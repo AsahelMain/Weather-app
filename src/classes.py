@@ -1,3 +1,9 @@
+#Modelado y programación - Proyecto 01 
+#Alumnos:
+#	-Main Cerezo Asahel Said
+#	-Reyes López Eduardo Alfonso
+#El diseño de la interfaz está basado en el código de Magno Efren, cuyo github es el siguiente: https://github.com/MagnoEfren
+
 import csv
 from hashlib import new
 import requests
@@ -106,12 +112,8 @@ class WeatherInfo:
         attributes.append(self.main_feelslike)
         attributes.append(self.main_humidity)
         attributes.append(self.weather_description)
-<<<<<<< HEAD
         return attributes
  
 
 
           
-=======
-        return attributes
->>>>>>> d0c443b38a232358f2be66f51e340152b67a642f
