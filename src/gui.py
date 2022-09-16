@@ -16,15 +16,18 @@ cache = {}
 
 class Window(Frame):
 
+	#Constructor de la ventana
 	def __init__(self, master, *args):
 		super().__init__( master,*args)
 		self.click = 1
 		
+		#Configuración de la ventana
 		self.master.columnconfigure(0, weight=1)
 		self.master.columnconfigure(1, weight=1)
 		self.master.rowconfigure(1, weight=1)
 		self.master.columnconfigure(2, weight=1)
 		self.master.rowconfigure(2, weight=1)
+		#Frames de la ventana
 		self.frame = Frame(self.master, bg='white', highlightbackground='grey1',highlightthickness=2)
 		self.frame.grid(columnspan=3, row = 0, sticky='nsew', padx=5, pady=5)
 		self.frame2 = Frame(self.master, bg='DarkOliveGreen1', highlightbackground='grey1',highlightthickness=2)
@@ -78,6 +81,7 @@ class Window(Frame):
 			self.description['text'] = weather_info[5]
 			self.place['text'] =  city
 		else:
+			self.place['text'] = ''
 			self.warning['text'] =  'Ciudad no encontrada'
 			self.temp['text'] = ''
 			self.feels_like['text'] = ''
@@ -85,10 +89,13 @@ class Window(Frame):
 			self.humidity['text'] = ''
 			self.master.update()
 			time.sleep(2)	    	
-			self.warning['text'] = ''
-			self.place['text'] = ''	
+			self.warning['text'] = ''	
 
+	"""
+	Función con todos los widgets de la ventana
+	"""
 	def widgets(self):
+		#Paths de las imágenes
 		absolute_folder_path = os.path.dirname(os.path.realpath(__file__))
 		absolute_path_search = os.path.join(absolute_folder_path, 'images/search.png')
 		self.start = PhotoImage(file =absolute_path_search)
@@ -107,20 +114,32 @@ class Window(Frame):
 		self.bt_start.grid(column=2, row=0, padx=2, pady=2)
 		
 		self.warning = Label(self.frame,fg= 'red3', bg='white',font=('Verdana',12))
-		self.warning.grid(column=5,row=0, padx=5)
+		self.warning.grid(column=4,row=0, padx=5)
 		self.place = Label(self.frame,fg= 'forest green', bg='white',font=('Helvetica',12,'bold'))
-		self.place.grid(column=6,row=0, padx=5)
+		self.place.grid(column=5,row=0, padx=5)
 
+		def button_action():
+			self.bt_data['text'] = 'Cargando datos'
+			get_database()
+			self.city_list['values'] = cities
+			self.bt_data['text'] = 'Actualizar datos'
+
+		self.bt_data = Button(self.frame, text='Cargar datos', bg='OliveDrab1',font=('Helvetica',14,'bold'),highlightthickness=0, activebackground='white', bd=0, command = button_action)
+		self.bt_data.grid(column=6, row=0, padx=2, pady=2)
+
+		#Textos de cada frame
 		Label(self.frame2,text='Informe del clima', bg='DarkOliveGreen1', font=('Helvetica',20,'bold')).pack(expand=1)
 		Label(self.frame3,text='Sensación térmica', bg='peach puff', font=('Helvetica',14,'bold')).pack(expand=1)
 		Label(self.frame4,text='Humedad' , bg='royal blue', font=('Helvetica',14,'bold')).pack(expand=1)
 		Label(self.frame5,text='Descripción' , bg='azure2', font=('Helvetica',14,'bold')).pack(expand=1)
 
+		#Imágenes de cada frame
 		Label(self.frame2, image= self.image_temp, bg='DarkOliveGreen1').pack(expand=1, side='left')
 		Label(self.frame3, image= self.image_feelslike, bg='peach puff').pack(expand=1, side='left')
 		Label(self.frame4, image= self.image_humidity, bg='royal blue').pack(expand=1, side='left')
 		Label(self.frame5, image= self.image_description, bg='azure2').pack(expand=1, side='left')
 
+		#campos para colocar el reporte del clima
 		self.temp = Label(self.frame2, bg='DarkOliveGreen1', font = "Helvetica 16 bold")
 		self.temp.pack(expand=1, side='right')
 		self.feels_like = Label(self.frame3,bg='peach puff', font = "Helvetica 16 bold")
