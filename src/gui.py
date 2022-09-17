@@ -16,6 +16,7 @@ import readcsv
 
 #Se obtiene un diccionario con todas las ciudades que se encontraron en el archivo csv
 myCities = readcsv.getCities()
+cities = readcsv.get_cities_list()
 
 #Se usa un diccionario como caché. Las llaves serán las claves IATA y los valores serán
 #objetos de tipo WeatherInfo
@@ -56,13 +57,13 @@ class Window(Frame):
 		#Revisamos si encontramos esa ciudad en el caché. Si sí, entonces ya no hacemos 
 		#una llamada a la API. De lo contrario, lo hacemos
 		if city_name in cache:
-			print(city_name + ' already in cache')
+			#print(city_name + ' already in cache')
 			#Obtenemos la información del clima desde el caché
 			weather = cache[city_name]
 			#Obtenemos la información climática en forma de lista
 			weather_list = weather.get_attributes_as_list()
 		else:
-			print(city_name + ' not in cache')
+			#print(city_name + ' not in cache')
 			#Obtenemos la información climática de la ciudad, en forma de objeto de tipo WeatherInfo
 			weather = city.get_weather()
 			#Guardamos en el caché la ciudad con su información climática
@@ -86,7 +87,7 @@ class Window(Frame):
 			self.feels_like['text'] = str(float(weather_info[3])) + " °C"
 			self.humidity['text'] = str(int(weather_info[4])) + ' %'	  
 			self.description['text'] = weather_info[5]
-			self.place['text'] =  city
+			self.place['text'] = weather_info[6]
 		else:
 			self.place['text'] = ''
 			self.warning['text'] =  'Ciudad no encontrada'
@@ -114,12 +115,22 @@ class Window(Frame):
 		self.image_humidity = PhotoImage(file =absolute_path_humidity)
 		absolute_path_description = os.path.join(absolute_folder_path, 'images/climate.png')
 		self.image_description = PhotoImage(file =absolute_path_description)
-		Label(self.frame,text='Buscar ciudad',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=0,row=0, padx=5)
+
+		#Elementos del primer frame superior
+		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.search_weather)
+		self.bt_start.grid(column=0, row=0, padx=2, pady=2)
+
+		#Función que borra el texto del cuadro de texto de búsqueda.
+		def delete_text(e):
+			self.enter_city.delete(0,"end")
+
 		self.enter_city = Entry(self.frame, font=('Verdana', 14),highlightbackground = "grey1", highlightcolor= "green2", highlightthickness=2)
 		self.enter_city.grid(column=1,row=0)
-		self.bt_start = Button(self.frame, image= self.start, bg='OliveDrab1',highlightthickness=0, activebackground='white', bd=0, command = self.search_weather)
-		self.bt_start.grid(column=2, row=0, padx=2, pady=2)
-		
+		self.enter_city.insert(0, "Buscar ciudad")
+		self.enter_city.bind("<FocusIn>", delete_text)
+		Label(self.frame,text='	Ciudades disponibles:',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=2,row=0, padx=5)
+		self.city_list = Combobox(self.frame, state = "readonly", values=cities, font=('Helvetica',12,'bold'))
+		self.city_list.grid(column=3, row=0)
 		self.warning = Label(self.frame,fg= 'red3', bg='white',font=('Verdana',12))
 		self.warning.grid(column=4,row=0, padx=5)
 		self.place = Label(self.frame,fg= 'forest green', bg='white',font=('Helvetica',12,'bold'))
@@ -137,7 +148,7 @@ class Window(Frame):
 		Label(self.frame4, image= self.image_humidity, bg='royal blue').pack(expand=1, side='left')
 		Label(self.frame5, image= self.image_description, bg='azure2').pack(expand=1, side='left')
 
-		#campos para colocar el reporte del clima
+		#Campos para colocar el reporte del clima
 		self.temp = Label(self.frame2, bg='DarkOliveGreen1', font = "Helvetica 16 bold")
 		self.temp.pack(expand=1, side='right')
 		self.feels_like = Label(self.frame3,bg='peach puff', font = "Helvetica 16 bold")

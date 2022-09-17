@@ -70,9 +70,10 @@ class City:
         main_temp_min = data['main']['temp_min']
         main_temp_max = data['main']['temp_max']
         main_humidity = data['main']['humidity'] 
+        city_name = data['name']
 
         #Se construye un objeto de tipo WeatherInfo con la información obtenida
-        new_weather_info = WeatherInfo(weather_main, weather_description, main_temp, main_feelslike, main_temp_min, main_temp_max, main_humidity)
+        new_weather_info = WeatherInfo(weather_main, weather_description, main_temp, main_feelslike, main_temp_min, main_temp_max, main_humidity, city_name)
 
         return new_weather_info
 
@@ -88,9 +89,10 @@ class WeatherInfo:
     main_temp_min = ''
     main_temp_max = ''
     main_humidity = ''
+    city_name = ''
 
     #Constructor
-    def __init__(self,  weather_main = '', weather_description = '', main_temp = '', main_feelslike = '', main_temp_min = '', main_temp_max = '', main_humidity = '' ):
+    def __init__(self,  weather_main = '', weather_description = '', main_temp = '', main_feelslike = '', main_temp_min = '', main_temp_max = '', main_humidity = '', city_name = ''):
         self.weather_main = weather_main
         self.weather_description = weather_description
         self.main_temp = main_temp
@@ -98,10 +100,11 @@ class WeatherInfo:
         self.main_temp_min = main_temp_min
         self.main_temp_max = main_temp_max
         self.main_humidity = main_humidity
+        self.city_name = city_name
 
     #Método que imprime los atributos de la clase
     def get_data(self):
-        print(f'{self.weather_main}, {self.weather_description}, {self.main_temp}, {self.main_feelslike}, {self.main_temp_min}, {self.main_temp_max}, {self.main_humidity}')
+        print(f'{self.weather_main}, {self.weather_description}, {self.main_temp}, {self.main_feelslike}, {self.main_temp_min}, {self.main_temp_max}, {self.main_humidity}, {self.city_name}')
        
     #Método que regresa los atributos de la clase en forma de una lista
     def get_attributes_as_list(self):
@@ -112,6 +115,7 @@ class WeatherInfo:
         attributes.append(self.main_feelslike)
         attributes.append(self.main_humidity)
         attributes.append(self.weather_description)
+        attributes.append(self.city_name)
         return attributes
  
 
