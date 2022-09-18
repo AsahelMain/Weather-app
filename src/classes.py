@@ -56,9 +56,12 @@ class City:
         URL += "lat=" + self.latitude + "&lon=" + self.longitude + "&appid=" + apikey + "&units=metric&lang=es"
         parameters = {'address':"location"}
 
-        #Llamada a la API
-        r = requests.get(url = URL, params = parameters)
-
+        try:
+            #Llamada a la API
+            r = requests.get(url = URL, params = parameters)
+        except:
+            print("Error while calling the API")
+        
         #Se extraen los datos en forma de diccionario con la función Json
         data = r.json()
         

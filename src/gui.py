@@ -57,13 +57,13 @@ class Window(Frame):
 		#Revisamos si encontramos esa ciudad en el caché. Si sí, entonces ya no hacemos 
 		#una llamada a la API. De lo contrario, lo hacemos
 		if city_name in cache:
-			#print(city_name + ' already in cache')
+			
 			#Obtenemos la información del clima desde el caché
 			weather = cache[city_name]
 			#Obtenemos la información climática en forma de lista
 			weather_list = weather.get_attributes_as_list()
 		else:
-			#print(city_name + ' not in cache')
+			
 			#Obtenemos la información climática de la ciudad, en forma de objeto de tipo WeatherInfo
 			weather = city.get_weather()
 			#Guardamos en el caché la ciudad con su información climática
