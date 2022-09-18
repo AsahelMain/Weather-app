@@ -24,5 +24,5 @@ Paqueterías usadas:
 
 
 Ejecución:
-En Proyecto01\src\ ejecutar el comando: python3 gui.py
+En Proyecto01 ejecutar el comando: python3 src.gui.py
 
