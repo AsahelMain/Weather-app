@@ -4,9 +4,6 @@
 #	-Reyes López Eduardo Alfonso
 #El diseño de la interfaz está basado en el código de Magno Efren, cuyo github es el siguiente: https://github.com/MagnoEfren
 
-
-from argparse import MetavarTypeHelpFormatter
-from asyncore import read
 from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
 from tkinter.ttk import Combobox    
 import time
