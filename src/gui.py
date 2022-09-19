@@ -157,7 +157,7 @@ class Window(Frame):
 
 if __name__ == "__main__":
 	window = Tk()
-	window.title('')
+	window.title('App del clima')
 	window.config(bg='white')
 	window.minsize(height= 600,width=1000)
 	absolute_folder_path = os.path.dirname(os.path.realpath(__file__))
