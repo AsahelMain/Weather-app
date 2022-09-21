@@ -1,8 +1,10 @@
-#Modelado y programación - Proyecto 01 
-#Alumnos:
-#	-Main Cerezo Asahel Said
-#	-Reyes López Eduardo Alfonso
-#El diseño de la interfaz está basado en el código de Magno Efren, cuyo github es el siguiente: https://github.com/MagnoEfren
+"""
+Modelado y programación - Proyecto 01 
+Alumnos:
+	-Main Cerezo Asahel Said
+	-Reyes López Eduardo Alfonso
+El diseño de la interfaz está basado en el código de Magno Efren, cuyo github es el siguiente: https://github.com/MagnoEfren
+"""
 
 from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
 from tkinter.ttk import Combobox    

@@ -14,9 +14,6 @@ Aplicación para Windows, Linux/Unix, Mac
 
 Versión de Python: Python 3.10.6
 
-Ejecución:
-En Proyecto01 ejecutar el comando: python3 src/gui.py
-
 Paqueterías usadas: 
 1. csv
 2. requests
@@ -27,6 +24,12 @@ Paqueterías usadas:
 7. tkinter.ttk: Combobox
 8. time
 
+Ejecutar los siguientes comandos para instalar las bibliotecas que necesitan ser instaladas:
+     pip install requests
+     pip install tk
+
+Ejecución:
+En Proyecto01 ejecutar el comando: python3 src/gui.py
 
 
 
