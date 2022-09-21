@@ -14,6 +14,9 @@ Aplicación para Windows, Linux/Unix, Mac
 
 Versión de Python: Python 3.10.6
 
+Ejecución:
+En Proyecto01 ejecutar el comando: python3 src/gui.py
+
 Paqueterías usadas: 
 1. csv
 2. requests
@@ -25,8 +28,7 @@ Paqueterías usadas:
 8. time
 
 
-Ejecución:
-En Proyecto01 ejecutar el comando: python3 src/gui.py
+
 
 ---Aviso---
 Si en el directorio src no se encuentra un archivo llamado "key.csv", se deberá crear un archivo con ese nombre y pegar ahí la llave. Para esto se debe ir a Open Weather: https://openweathermap.org/ y crear una cuenta, posteriomente nos vamos a nuestro perfil en la sección "My API keys", ahí se encontrará la llave personal que deberá pegar en el archivo "key.csv" que acaba de 
