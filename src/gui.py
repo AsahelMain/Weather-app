@@ -8,12 +8,12 @@ from tkinter import  Tk, Button, Entry, Label,PhotoImage,Frame
 from tkinter.ttk import Combobox    
 import time
 import os
-from classes import City
+from airport import Airport
 import readcsv
 
 #Se obtiene un diccionario con todas las ciudades que se encontraron en el archivo csv
-myCities = readcsv.getCities()
-cities = readcsv.get_cities_list()
+airports_dictionary = readcsv.getAirports()
+airports_list = readcsv.get_airports_list()
 
 #Se usa un diccionario como caché. Las llaves serán las claves IATA y los valores serán
 #objetos de tipo WeatherInfo
@@ -48,38 +48,38 @@ class Window(Frame):
 
 	#Método que recibe una ciudad y que regresa los atributos climáticos de esa ciudad
 	#en una lista 
-	def get_weather_info(self, city: City):
+	def get_weather_info(self, airport: Airport):
 
-		city_name = city.get_city()
+		airport_iata_code = airport.get_airport_code()
 		#Revisamos si encontramos esa ciudad en el caché. Si sí, entonces ya no hacemos 
 		#una llamada a la API. De lo contrario, lo hacemos
-		if city_name in cache:
+		if airport_iata_code in cache:
 			
 			#Obtenemos la información del clima desde el caché
-			weather = cache[city_name]
+			weather = cache[airport_iata_code]
 			#Obtenemos la información climática en forma de lista
 			weather_list = weather.get_attributes_as_list()
 		else:
 			
 			#Obtenemos la información climática de la ciudad, en forma de objeto de tipo WeatherInfo
-			weather = city.get_weather()
+			weather = airport.get_weather()
 			#Guardamos en el caché la ciudad con su información climática
-			cache[city_name] = weather
+			cache[airport_iata_code] = weather
 			#Obtenemos la información climática en forma de lista
 			weather_list = weather.get_attributes_as_list()
 		return weather_list
 	
 	#Método que busca la ciudad deseada y muestra en pantalla la información climática obtenida
 	def search_weather(self):
-		city = self.enter_city.get()
-		city = city.upper()
+		airport_iata_code = self.enter_airport.get()
+		airport_iata_code = airport_iata_code.upper()
 
 		#Revisamos si la ciudad está en la lista de ciudades que se leyeron del csv
 		#Si está, entonces mandamos a llamar a get_weather_info y mostramos la información del clima en pantalla
 		#Si no está entonces mostramos en pantalla que la ciudad no fue encontrada
-		if city in myCities:
-			desired_city = myCities[city]
-			weather_info = self.get_weather_info(desired_city)
+		if airport_iata_code in airports_dictionary:
+			desired_airport = airports_dictionary[airport_iata_code]
+			weather_info = self.get_weather_info(desired_airport)
 			self.temp['text'] = "Temperatura " + str(float(weather_info[0])) + " °C\n\n" + "T máxima " + str(float(weather_info[1]))  +" °C\n\n" + "T mínima " +str(float(weather_info[2])) +" °C"
 			self.feels_like['text'] = str(float(weather_info[3])) + " °C"
 			self.humidity['text'] = str(int(weather_info[4])) + ' %'	  
@@ -119,15 +119,15 @@ class Window(Frame):
 
 		#Función que borra el texto del cuadro de texto de búsqueda.
 		def delete_text(e):
-			self.enter_city.delete(0,"end")
+			self.enter_airport.delete(0,"end")
 
-		self.enter_city = Entry(self.frame, font=('Verdana', 14),highlightbackground = "grey1", highlightcolor= "green2", highlightthickness=2)
-		self.enter_city.grid(column=1,row=0)
-		self.enter_city.insert(0, "Buscar ciudad")
-		self.enter_city.bind("<FocusIn>", delete_text)
-		Label(self.frame,text='	Ciudades disponibles:',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=2,row=0, padx=5)
-		self.city_list = Combobox(self.frame, state = "readonly", values=cities, font=('Helvetica',12,'bold'))
-		self.city_list.grid(column=3, row=0)
+		self.enter_airport = Entry(self.frame, font=('Verdana', 14),highlightbackground = "grey1", highlightcolor= "green2", highlightthickness=2)
+		self.enter_airport.grid(column=1,row=0)
+		self.enter_airport.insert(0, "Introduzca un código iata")
+		self.enter_airport.bind("<FocusIn>", delete_text)
+		Label(self.frame,text='	Aeropuertos disponibles:',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=2,row=0, padx=5)
+		self.airport_list = Combobox(self.frame, state = "readonly", values=airports_list, font=('Helvetica',12,'bold'))
+		self.airport_list.grid(column=3, row=0)
 		self.warning = Label(self.frame,fg= 'red3', bg='white',font=('Verdana',12))
 		self.warning.grid(column=4,row=0, padx=5)
 		self.place = Label(self.frame,fg= 'forest green', bg='white',font=('Helvetica',12,'bold'))
