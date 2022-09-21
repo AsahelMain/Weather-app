@@ -4,6 +4,7 @@
 #	-Reyes López Eduardo Alfonso
 
 import csv
+import os.path
 from classes import City
 
 cities_list = []
@@ -15,8 +16,11 @@ cities_list = []
 def getCities():
     cities = {}
 
+    current_directory = os.path.dirname(__file__)
+    parent_directory = os.path.split(current_directory)[0]
+
     #Se accede al archivo csv
-    with open('dataset1.csv', 'r') as file:
+    with open(parent_directory + '\dataset1.csv', 'r') as file:
         reader = csv.reader(file)
         next(reader) #Saltamos el primer renglón del archivo CSV 
         for row in reader:

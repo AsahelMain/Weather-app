@@ -4,7 +4,6 @@
 #	-Reyes López Eduardo Alfonso
 
 import readcsv
-import classes
 
 #Prueba para leer el cache
 #Se imprimen todas las ciudades distintas del csv

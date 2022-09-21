@@ -4,9 +4,7 @@
 #	-Reyes López Eduardo Alfonso
 
 import csv
-from hashlib import new
 import requests
-from urllib import request
 import os
 
 #Clase City. Modela una ciudad.
