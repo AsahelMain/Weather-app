@@ -2,6 +2,7 @@
 Proyecto hecho en python que dado un archivo csv obtiene la información climática de ciudades
 
 Link al repositorio del proyecto: https://github.com/AsahelMain/Proyecto01
+
 El diseño de la interfaz está basado en el código de Magno Efren, cuyo github es: https://github.com/MagnoEfren
 
 ## Alumnos:
@@ -10,7 +11,11 @@ El diseño de la interfaz está basado en el código de Magno Efren, cuyo github
 
 ## Prerrequisitos
      1. [Instalar Python] (https://www.python.org/downloads) tomando en cuenta el sistema operativo que se tiene 
-     2. Contar con una llave en [OpenWeather](https://openweathermap.org)
+     2. Instalar la biblioteca [Requests](https://pypi.org/project/requests/) en su sitio web o en su defecto, ejecutar el comando:
+          ```bash
+               pip install requests 
+          ```
+     3. Contar con una llave en [OpenWeather](https://openweathermap.org)
           a) Registrarse en OpenWeather 
           b) Ir al perfil en la sección de "My API keys"
           c) Copiar la llave que se encontrará debajo de la palabra "Key"
