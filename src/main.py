@@ -152,7 +152,7 @@ class Window(Frame):
 
 		self.enter_airport = Entry(self.frame, font=('Verdana', 14),highlightbackground = "grey1", highlightcolor= "green2", highlightthickness=2)
 		self.enter_airport.grid(column=1,row=0)
-		self.enter_airport.insert(0, "Introduzca un código iata")
+		self.enter_airport.insert(0, "Introducir código IATA")
 		self.enter_airport.bind("<FocusIn>", delete_text)
 		Label(self.frame,text='	Aeropuertos disponibles:',fg= 'gray55', bg='white',font=('Verdana',12)).grid(column=2,row=0, padx=5)
 		self.airport_list = Combobox(self.frame, state = "readonly", values=self.airports_list, font=('Helvetica',12,'bold'))
