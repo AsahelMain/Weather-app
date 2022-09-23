@@ -11,11 +11,10 @@ El diseño de la interfaz está basado en el código de Magno Efren, cuyo github
 
 ## Prerrequisitos
      1. [Instalar Python] (https://www.python.org/downloads) tomando en cuenta el sistema operativo que se tiene 
-     2. Instalar la biblioteca [Requests](https://pypi.org/project/requests/) en su sitio web o en su defecto, ejecutar el comando:
+     2. Instalar la biblioteca [Requests](https://pypi.org/project/requests/) en su sitio web o en su defecto, ejecutar el siguiente comando en la terminal:
 
-     ```bash
-          pip install requests 
-     ```
+           pip install requests 
+
      3. Contar con una llave en [OpenWeather](https://openweathermap.org)
           a) Registrarse en OpenWeather 
           b) Ir al perfil en la sección de "My API keys"
