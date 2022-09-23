@@ -35,7 +35,7 @@ Situarse en el directorio Proyecto01/src:
 ```
 Para ejecutar el proyecto usar el siguiente comando:
 ```bash
-    python3 ./gui.py
+    python3 ./main.py
 ```
 ## Bibliotecas usadas
      1. csv      ----> usada para leer el archivo csv con la función reader()

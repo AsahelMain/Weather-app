@@ -8,7 +8,7 @@ import os.path
 from airport import Airport
 
 class ReadCSV:
-    
+
     airports_list = []
 
     def getAirports(self):
