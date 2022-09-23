@@ -21,6 +21,8 @@ class Window(Frame):
 
 	Atributos:
 	-----------
+	reader : ReadCSV
+		objeto que permite obtener todos los aeropuertos
 	airports_dictionary : Airport
 		diccionario con los distintos aeropuertos
 	airports_lists : Airport
@@ -37,13 +39,16 @@ class Window(Frame):
 		Método con todos los widgets de la ventana
 	"""
 	
-	reader = ReadCSV()
-	airports_dictionary = reader.getAirports()
-	airports_list = reader.get_airports_list()
-	cache = {}
+	
 
 	def __init__(self, master, *args):
 		super().__init__( master,*args)
+
+		self.reader = ReadCSV()
+		self.airports_dictionary = self.reader.getAirports()
+		self.airports_list = self.reader.get_airports_list()
+		self.cache = {}
+
 		self.click = 1
 		self.master.columnconfigure(0, weight=1)
 		self.master.columnconfigure(1, weight=1)
@@ -60,6 +65,8 @@ class Window(Frame):
 		self.frame4.grid(column=1, row = 2, sticky='nsew', padx=5, pady=5)
 		self.frame5 = Frame(self.master, bg='azure2', highlightbackground='grey1',highlightthickness=2) 
 		self.frame5.grid(column=2, row =2 , sticky='nsew', padx=5, pady=5)
+
+		
 
 		self.widgets()
 
