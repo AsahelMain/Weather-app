@@ -28,22 +28,26 @@ class Airport:
         return self.longitude
 
     #Lee el archivo key.csv y regresa la llave API 
-    def get_key(self):
-        apikey = ''
-        absolute_folder_path = os.path.dirname(os.path.realpath(__file__))
-        absolute_key_path = os.path.join(absolute_folder_path, 'key.csv')
-        with open(absolute_key_path, 'r') as file:
+    def get_key(self, filename, search_path):
+        result = ' '
+        for root, dir, files in os.walk(search_path):
+            if filename in files:
+                result = os.path.join(root, filename)
+
+        with open(result, 'r') as file:
             reader = csv.reader(file)
             for row in reader:
                 apikey = row[0]
         return apikey
 
+
     #Método que hace una llamada a la API para obtener el clima de la ciudad
     #Regresa un objeto de tipo WeatherInfo
     def get_weather(self):
 
-        #Se obtiene la llave API
-        apikey = self.get_key()
+        current_directory = os.path.dirname(__file__)
+        parent_directory = os.path.split(current_directory)[0]
+        apikey = self.get_key("key.csv", parent_directory)
         URL = "http://api.openweathermap.org/data/2.5/weather?" 
         URL += "lat=" + self.latitude + "&lon=" + self.longitude + "&appid=" + apikey + "&units=metric&lang=es"
         parameters = {'address':"location"}
