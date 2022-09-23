@@ -1,49 +1,35 @@
-#Modelado y programación - Proyecto 01 
-#Alumnos:
-#	-Main Cerezo Asahel Said
-#	-Reyes López Eduardo Alfonso
 
 import csv
 import os.path
-from classes import City
+from airport import Airport
 
-cities_list = []
+class ReadCSV:
 
-#Funcion getCities. Lee el archivo csv y a partir de él
-#devuelve un diccionario
-#en la que las llaves son las claves IATA de aeropuertos
-#y los valores son objetos de tipo City
-def getCities():
-    cities = {}
+    airports_list = []
 
-    current_directory = os.path.dirname(__file__)
-    parent_directory = os.path.split(current_directory)[0]
+    def getAirports(self):
+        airports = {}
 
-    #Se accede al archivo csv
-    with open(parent_directory + '\dataset1.csv', 'r') as file:
-        reader = csv.reader(file)
-        next(reader) #Saltamos el primer renglón del archivo CSV 
-        for row in reader:
-            #Las primeras dos columnas del archivo corresponden a 
-            #las claves iata de los aeropuertos. Asignamos estos valores
-            #a dos variables
-            city_name1 = row[0]
-            city_name2 = row[1]
+        current_directory = os.path.dirname(__file__)
+        parent_directory = os.path.split(current_directory)[0]
 
-            #Revisamos primero si la ciudad ya está en el diccionario
-            if city_name1 not in cities:
-                #Creamos un objeto de tipo ciudad con el nombre, latitud y longitud de la ciudad
-                city_object = City(row[0], row[2], row[3])
-                #Guardamos la ciudad en el diccionario. La llave será la clave IATA y el valor el objeto
-                #de tipo City
-                cities[city_name1] = city_object
-                cities_list.append(city_name1)
-            if city_name2 not in cities:
-                city_object = City(row[1], row[4], row[5])
-                cities[city_name2] = city_object
-                cities_list.append(city_name2)
+        with open(parent_directory + '\dataset1.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader) 
+            for row in reader:
+                iata_code1 = row[0]
+                iata_code2 = row[1]
 
-    return cities
+                if iata_code1 not in airports:
+                    airport_object = Airport(row[0], row[2], row[3])
+                    airports[iata_code1] = airport_object
+                    self.airports_list.append(iata_code1)
+                if iata_code2 not in airports:
+                    airport_object = Airport(row[1], row[4], row[5])
+                    airports[iata_code2] = airport_object
+                    self.airports_list.append(iata_code2)
 
-def get_cities_list():
-    return cities_list
+        return airports
+
+    def get_airports_list(self):
+        return self.airports_list
