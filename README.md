@@ -10,7 +10,7 @@ El diseño de la interfaz está basado en el código de Magno Efren, cuyo github
      2. Reyes López Eduardo Alfonso
 
 ## Prerrequisitos
-     1. [Instalar Python] (https://www.python.org/downloads) tomando en cuenta el sistema operativo que se tiene 
+     1. [Instalar Python](https://www.python.org/downloads) tomando en cuenta el sistema operativo que se tiene 
      2. Instalar la biblioteca [Requests](https://pypi.org/project/requests/) en su sitio web o en su defecto, ejecutar el siguiente comando en la terminal:
 
            pip install requests 
@@ -23,6 +23,10 @@ El diseño de la interfaz está basado en el código de Magno Efren, cuyo github
 ## Instalación
      Clonar el repositorio: https://github.com/AsahelMain/Proyecto01
 
+## Pre-ejecución
+
+Dentro del directorio Proyecto01, en el archivo con nombre "key.csv" pegar su llave del sitio de OpenWeather
+
 ## Ejecución
 
 Situarse en el directorio Proyecto01/src:
@@ -33,26 +37,13 @@ Para ejecutar el proyecto usar el siguiente comando:
 ```bash
     python3 ./gui.py
 ```
+## Bibliotecas usadas
+     1. csv      ----> usada para leer el archivo csv con la función reader()
+     2. requests ----> usada para hacer la llamada a la API con la función open()
+     5. os       ----> usada para acceder a la dirección de archivos
+     6. tkinter: Tk, Button, Entry, Label,PhotoImage,Frame ----> usada para la GUI
+     7. tkinter.ttk: Combobox ----> usada para la GUI
+     8. time     ----> usada en la GUI
 
 
-Aplicación para Windows, Linux/Unix, Mac
-
-Versión de Python: Python 3.10.6
-
-Paqueterías usadas: 
-1. csv
-2. requests
-3. hashlib: new
-4. urllib: request
-5. os
-6. tkinter: Tk, Button, Entry, Label,PhotoImage,Frame
-7. tkinter.ttk: Combobox
-8. time
-
-Ejecutar los siguientes comandos para instalar las bibliotecas que necesitan ser instaladas:
-     pip install requests
-     pip install tk
-
-Ejecución:
-En Proyecto01 ejecutar el comando: python3 src/gui.py
 
