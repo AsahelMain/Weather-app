@@ -1,5 +1,3 @@
-
-
 class WeatherInfo:
     """
     Clase que modela la información del clima de lugares con aeropuerto

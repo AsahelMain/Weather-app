@@ -29,10 +29,10 @@ class Window(Frame):
 	Métodos:
 	----------
 	get_weather_info(airport: Airport):
-		Método que recibe una ciudad y que regresa los atributos climáticos de esa ciudad
+		Método que recibe un objeto de tipo Airport y que regresa los atributos climáticos del lugar
 		en una lista
 	search_weather():
-		Método que busca la ciudad deseada y muestra en pantalla la información climática obtenida
+		Método que busca el lugar deseado y muestra en pantalla la información climática obtenida
 	widgets():
 		Método con todos los widgets de la ventana
 	"""
@@ -64,6 +64,20 @@ class Window(Frame):
 		self.widgets()
 
 	def get_weather_info(self, airport: Airport):
+		"""
+		Método que recibe un objeto de tipo Airport y que regresa los atributos climáticos del lugar
+		en una lista
+		
+		Parámetros
+		----------
+		airport : Airport
+			el objeto de tipo aeropuerto
+		
+		Returns
+		-------
+		weather_list : Airport 
+			Lista con la información del clima 
+		"""
 		airport_iata_code = airport.get_airport_code()
 		if airport_iata_code in self.cache:
 			weather = self.cache[airport_iata_code]
@@ -76,6 +90,18 @@ class Window(Frame):
 	
 	
 	def search_weather(self):
+		"""
+		Método que busca el lugar deseado y muestra en pantalla la información climática obtenida
+
+		Parámetros
+		----------
+		None
+
+		Returns
+		-------
+		None
+
+		"""
 		airport_iata_code = self.enter_airport.get()
 		airport_iata_code = airport_iata_code.upper()
 

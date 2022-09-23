@@ -1,7 +1,3 @@
-#Modelado y programación - Proyecto 01 
-#Alumnos:
-#	-Main Cerezo Asahel Said
-#	-Reyes López Eduardo Alfonso
 
 import csv
 import os.path
