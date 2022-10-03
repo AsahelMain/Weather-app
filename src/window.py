@@ -201,13 +201,14 @@ class Window(Frame):
 
 		return images
 
-	def set_searchbar(self, images):
+	def set_search_bar(self, images):
 		"""
 		Método que establece la apariencia y funcionalidad del primer frame que contiene lo relativo a la búsqueda.
 
 		Parámetros: 
 		----------
-		None.
+		images : Array
+			Arreglo de imágenes.
 
 		Returns:
 		-------
@@ -251,6 +252,18 @@ class Window(Frame):
 		self.place.grid(column=5,row=0, padx=5)
 
 	def set_frames(self, images):
+		"""
+		Método que establece la apariencia y funcionalidad de los frames de la ventana.
+
+		Parámetros: 
+		----------
+		images : Array
+
+		Returns:
+		-------
+		None.
+
+		"""
 		Label(self.frame2,text='Informe del clima', bg='DarkOliveGreen1', font=('Helvetica',20,'bold')).pack(expand=1)
 		Label(self.frame3,text='Sensación térmica', bg='peach puff', font=('Helvetica',14,'bold')).pack(expand=1)
 		Label(self.frame4,text='Humedad' , bg='royal blue', font=('Helvetica',14,'bold')).pack(expand=1)
@@ -284,5 +297,5 @@ class Window(Frame):
 
 		"""
 		self.images = self.get_images()
-		self.set_searchbar(self.images)
+		self.set_search_bar(self.images)
 		self.set_frames(self.images)
