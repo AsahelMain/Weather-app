@@ -4,10 +4,41 @@ import os.path
 from airport import Airport
 
 class ReadCSV:
+    """
+    Clase que se encarga de la lectura de la base de datos CSV.
+
+    ...
+
+    Atributos: 
+    ---------
+    airports_list : List 
+        Lista de los aeropuertos dentro de la base de datos
+
+    Métodos:
+    -------
+    getAirports():
+        Método que obtiene la información de los aeropuertos.
+    get_airports_list():
+        Método que obtiene la lista de aeropuertos.
+    """
 
     airports_list = []
 
     def getAirports(self):
+        """
+        Método que lee la base de datos y obtiene la información de los vuelos 
+        usando un diccionario. Para cada vuelo, se guarda la información según
+        los aeropuertos de origen y destino, almacenando su latitud y longitud sólo
+        si no se encuentran en el diccionario. 
+
+        Parámetros
+        ----------
+        None 
+
+        Returns 
+        -------
+        None
+        """
         airports = {}
 
         current_directory = os.path.dirname(__file__)
@@ -32,4 +63,18 @@ class ReadCSV:
         return airports
 
     def get_airports_list(self):
+        """
+        Método por el cual se obtiene la lista de aeropuertos
+        (códigos iata) sin repetición que se encuentran en la 
+        base de datos como aerpuertos ya sea de origen o destino.
+
+        Parámetros 
+        ----------
+        None 
+
+        Returns 
+        -------
+        airports_list : List
+            Lista de aeropuertos (códigos iata)
+        """
         return self.airports_list

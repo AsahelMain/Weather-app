@@ -35,8 +35,14 @@ class Window(Frame):
 		en una lista
 	search_weather():
 		Método que busca el lugar deseado y muestra en pantalla la información climática obtenida
+	get_images():
+		Función que obtiene las imágenes del directorio "images".
+	set_search_bar(images):
+		Método que establece la apariencia y funcionalidad del primer frame que contiene lo relativo a la búsqueda.
+	set_frames(images):
+		Método que establece la apariencia y funcionalidad de los frames de la ventana.
 	widgets():
-		Método con todos los widgets de la ventana
+		Método que administra los recursos de la ventana.
 	"""
 	
 	
@@ -100,9 +106,6 @@ class Window(Frame):
 		self.frame4.grid(column=1, row = 2, sticky='nsew', padx=5, pady=5)
 		self.frame5 = Frame(self.master, bg='azure2', highlightbackground='grey1',highlightthickness=2) 
 		self.frame5.grid(column=2, row =2 , sticky='nsew', padx=5, pady=5)
-
-		
-
 		self.widgets()
 
 	def get_weather_info(self, airport: Airport):
@@ -142,7 +145,6 @@ class Window(Frame):
 		Returns
 		-------
 		None
-
 		"""
 		airport_iata_code = self.enter_airport.get()
 		airport_iata_code = airport_iata_code.upper()
@@ -176,9 +178,8 @@ class Window(Frame):
 
 		Returns:
 		-------
-			images : Array
+		images : Array
 			Arreglo con las imágenes del directorio.
-
 		"""
 		images = []
 
@@ -213,7 +214,6 @@ class Window(Frame):
 		Returns:
 		-------
 		None.
-
 		"""
 
 		def delete_text(e):
@@ -262,7 +262,6 @@ class Window(Frame):
 		Returns:
 		-------
 		None.
-
 		"""
 		Label(self.frame2,text='Informe del clima', bg='DarkOliveGreen1', font=('Helvetica',20,'bold')).pack(expand=1)
 		Label(self.frame3,text='Sensación térmica', bg='peach puff', font=('Helvetica',14,'bold')).pack(expand=1)
@@ -294,7 +293,6 @@ class Window(Frame):
 		Returns:
 		-------
 		None.
-
 		"""
 		self.images = self.get_images()
 		self.set_search_bar(self.images)
