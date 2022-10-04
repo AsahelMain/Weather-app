@@ -101,7 +101,3 @@ class WeatherInfo:
         attributes.append(self.weather_description)
         attributes.append(self.aiport_iata_code)
         return attributes
- 
-
-
-          
