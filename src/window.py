@@ -86,7 +86,7 @@ class Window(Frame):
 		super().__init__( master,*args)
 
 		self.reader = ReadCSV()
-		self.airports_dictionary = self.reader.getAirports()
+		self.airports_dictionary = self.reader.get_airports()
 		self.airports_list = self.reader.get_airports_list()
 		self.cache = {}
 

@@ -37,6 +37,31 @@ Para ejecutar el proyecto usar el siguiente comando:
 ```bash
     python3 ./main.py
 ```
+
+## Ejecución pruebas
+
+Situarse en el directorio Proyecto01 y ejecutar los siguientes comandos según las pruebas deseadas.
+
+Pruebas Aeropuerto (airport.py):
+```bash
+     python3 tests/TestAirport.py
+```
+
+Pruebas lectura de base de datos (readcsv.py):
+```bash
+     python3 tests/TestReadcsv.py
+```
+
+Pruebas Información climática (weatherInfo.py):
+```bash
+     python3 tests/TestWeatherInfo.py
+```
+
+Pruebas Ventana (window.py):
+```bash
+     python3 tests/TestWindow.py
+```
+
 ## Bibliotecas usadas
      1. csv      ----> usada para leer el archivo csv con la función reader()
      2. requests ----> usada para hacer la llamada a la API con la función open()

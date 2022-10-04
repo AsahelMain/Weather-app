@@ -1,4 +1,3 @@
-
 import csv
 import os.path
 from airport import Airport
@@ -16,7 +15,7 @@ class ReadCSV:
 
     Métodos:
     -------
-    getAirports():
+    get_airports():
         Método que obtiene la información de los aeropuertos.
     get_airports_list():
         Método que obtiene la lista de aeropuertos.
@@ -24,7 +23,7 @@ class ReadCSV:
 
     airports_list = []
 
-    def getAirports(self):
+    def get_airports(self):
         """
         Método que lee la base de datos y obtiene la información de los vuelos 
         usando un diccionario. Para cada vuelo, se guarda la información según
